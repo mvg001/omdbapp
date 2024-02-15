@@ -1,0 +1,7 @@
+{
+  "name": "omdbapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
