@@ -16,7 +16,7 @@ export class FormularioPage implements OnInit {
   pelicula: MovieData | undefined;
   titulo: string = '';
   cargando: boolean = false;
-  pelisLocal: MovieData[] | undefined;
+
 
   constructor(private omdbSvc: OmdbSvcService, private ldb: LocalStorageService) { }
 
@@ -28,7 +28,6 @@ export class FormularioPage implements OnInit {
   }
 
   showPeli(pelicula: MovieData) {
-    this.pelisLocal = undefined;
     this.pelicula = pelicula;
   }
 
@@ -36,7 +35,6 @@ export class FormularioPage implements OnInit {
     if (this.titulo.trim().length <= 0) return;
     console.log(`buscando: ${this.titulo}`);
     this.pelicula = undefined;
-    this.pelisLocal = undefined;
     let formulario = this;
     this.cargando = true;
     let t = this.titulo;
@@ -59,7 +57,6 @@ export class FormularioPage implements OnInit {
   buscarPeliLocalmente() {
     if (this.titulo.trim().length <= 0) return;
     this.pelicula = undefined;
-    this.pelisLocal = undefined;
     let t = this.titulo;
     this.titulo = '';
     this.ldb.getPelicula(this.titulo).subscribe(
@@ -67,18 +64,4 @@ export class FormularioPage implements OnInit {
     );
   }
 
-  listadoLocal() {
-    this.cargando = true;
-    this.pelicula = undefined;
-    this.ldb.getAllPeliculas().then((lista: MovieData[]) => {
-      this.pelisLocal = lista;
-      this.cargando = false;
-    });
-  }
-  deletePeli(titulo: string) {
-    console.log('delete: ' + titulo);
-    this.ldb.deletePelicula(titulo);
-    this.pelisLocal = undefined;
-    this.pelicula = undefined;
-  }
 } // end of FormularioPage
